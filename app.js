@@ -6,9 +6,18 @@ const PORT = process.env.PORT || 3001;
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL
 })
-
 app.use(cors())
 app.get("/", (req, res) => res.type('html').send(html));
+
+app.get('/users', async (req, res) => {
+  try {
+      const { rows } = await pool.query(`SELECT * FROM cliente`)
+      return res.status(200).send(rows)
+  }
+  catch (err) {
+      return res.status(400).send(err)
+  }
+})
 
 app.listen(PORT, () => console.log(`Example app listening on PORT ${PORT}!`));
 
