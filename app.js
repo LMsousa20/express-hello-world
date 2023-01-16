@@ -1,12 +1,16 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
+const { Pool } = require('pg')
+const PORT = process.env.PORT || 3001;
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL
+})
 
-const port = process.env.PORT || 3001;
 app.use(cors())
 app.get("/", (req, res) => res.type('html').send(html));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on PORT ${PORT}!`));
 
 
 const html = `
