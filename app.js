@@ -7,6 +7,16 @@ const pool = new Pool({
   connectionString: process.env.POSTGRES_URL
 })
 app.use(cors())
+
+function testeNaTela(xpcoin) {
+  var pagina = `
+      <h1>DEU CERTO CARALHO</h1>
+      <h2>${PORT}</h2>
+      <h1>Sua pontuação e ${xpcoin}</h1>
+      `
+  return pagina
+}
+
 app.get("/", (req, res) => res.type('html').send(html));
 
 app.get('/users', async (req, res) => {
@@ -22,7 +32,6 @@ app.get('/users', async (req, res) => {
 app.get('/users/:idclient', async (req, res) => {
   var client = req.params.idclient;
   console.log(client)
-
   try {
       const retorno = await pool.query(`SELECT * FROM cliente WHERE cpf_cnpj = '${client}'`)
       var reposta = res.status(200).send(testeNaTela(retorno.rows[0].qntd_pontos))
