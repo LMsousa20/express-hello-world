@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3001;
+const cors = require('cors');
 
+const port = process.env.PORT || 3001;
+app.use(cors())
 app.get("/", (req, res) => res.type('html').send(html));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -52,7 +54,7 @@ const html = `
   </head>
   <body>
     <section>
-      Hello from Render!
+      Darlan Gay
     </section>
   </body>
 </html>
