@@ -22,19 +22,16 @@ app.get('/users', async (req, res) => {
 
 app.get('/users/:idclient', async (req, res) => {
   var client = req.params.idclient;
-  res.send(client)
   console.log(client)
+  try {
+      const retorno = await pool.query('SELECT * FROM cliente WHERE cpf_cnpj ='+client)
+      var reposta = res.status(200).send(retorno.rows)
 
-
-  // try {
-  //     const retorno = await pool.query(`SELECT * FROM cliente WHERE cpf_cnpj = '${client}'`)
-  //     var reposta = res.status(200).send(rows)
-
-  //     return reposta
-  // }
-  // catch (err) {
-  //     return res.status(400).send(err)
-  // }
+      return reposta
+  }
+  catch (err) {
+      return res.status(400).send(err)
+  }
 })
 
 
