@@ -8,7 +8,7 @@ const pool = new Pool({
 })
 app.use(cors())
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.get("/", (req, res) => res.type('html').send(rows));
 
 app.get('/users', async (req, res) => {
   try {
@@ -22,16 +22,19 @@ app.get('/users', async (req, res) => {
 
 app.get('/users/:idclient', async (req, res) => {
   var client = req.params.idclient;
+  res.send(client)
   console.log(client)
-  try {
-      const retorno = await pool.query(`SELECT * FROM cliente WHERE cpf_cnpj = '${client}'`)
-      var reposta = res.status(200).send(rows)
 
-      return reposta
-  }
-  catch (err) {
-      return res.status(400).send(err)
-  }
+
+  // try {
+  //     const retorno = await pool.query(`SELECT * FROM cliente WHERE cpf_cnpj = '${client}'`)
+  //     var reposta = res.status(200).send(rows)
+
+  //     return reposta
+  // }
+  // catch (err) {
+  //     return res.status(400).send(err)
+  // }
 })
 
 
