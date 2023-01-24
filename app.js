@@ -36,6 +36,18 @@ app.get('/users/:idclient', async (req, res) => {
   }
 })
 
+app.get('/products', async (req, res) => {
+  try {
+      const { rows } = await pool.query(`SELECT * FROM produtos`)
+      return res.status(200).send(rows)
+  }
+  catch (err) {
+      return res.status(400).send(err)
+  }
+})
+
+
+
 
 app.listen(PORT, () => console.log(`Example app listening on PORT ${PORT}!`));
 
