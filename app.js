@@ -16,8 +16,8 @@ app.get("/", (req, res) => res.type('html').send(rows));
 
 app.get('/users', async (req, res) => {
   try {
-      const { rows } = await pool.query(`SELECT * FROM cliente`)
-      return res.status(200).send(rows)
+      const repUsers = await pool.query(`SELECT * FROM cliente`)
+      return res.status(200).send(repUsers.rows)
   }
   catch (err) {
       return res.status(400).send(err)
@@ -61,7 +61,10 @@ try {
   await pool.query(`INSERT INTO cad_produtos (name, description, value_xpc)
   VALUES('${cad.nome}', '${cad.descricao}', ${cad.valor});`)
 
-   return res.status(201).send(cad)
+   return res.status(201).send({
+    mensagem: "produto cadastrado com sucesso",
+    produto: cad
+   })
 }
 catch (err) {
 
