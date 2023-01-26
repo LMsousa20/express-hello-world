@@ -91,7 +91,6 @@ const uploadBanner = multer({
 
 app.use('/banner', express.static('banner'))
 app.post('/banner', uploadBanner.single('banner_imagem') ,async (req, res) => {
-  console.log(req.file)
   const pedido = {
       nome: req.body.nome,
       description: req.body.description,
@@ -104,11 +103,7 @@ app.post('/banner', uploadBanner.single('banner_imagem') ,async (req, res) => {
       
   })
   await pool.query(`UPDATE empresas SET urlbanner1=${pedido.url} where razao='CEARA' `)
-  console.table(pedido)
-
 })
-
-
 
 app.listen(PORT, () => console.log(`Example app listening on PORT ${PORT}!`));
 
