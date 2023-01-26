@@ -16,7 +16,7 @@ app.get("/", (req, res) => res.type('html').send(rows));
 
 app.get('/users', async (req, res) => {
   try {
-      const repUsers = await pool.query(`SELECT * FROM cliente`)
+      const repUsers = await pool.query(`SELECT * FROM clientes`)
       return res.status(200).send(repUsers.rows)
   }
   catch (err) {
