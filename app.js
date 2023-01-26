@@ -8,6 +8,7 @@ const pool = new Pool({
 })
 app.use(cors())
 app.use(express.json())
+const multer = require('multer')
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json());
 
@@ -70,6 +71,40 @@ catch (err) {
 
   return res.status(400).send(err)
 }
+
+})
+
+
+const storageBanner = multer.diskStorage({
+  destination: (req, file, cb)=>{
+      cb(null, `./imgDoBanner/`)
+  },
+  filename: (req, file, cb)=>{
+      cb(null, 'imgDoBanner'+ String(Math.round(Math.random() *10000)) +'.jpg')
+
+  }
+})
+
+const uploadBanner = multer({
+  storage: storageBanner
+})
+
+app.use('/banner', express.static('banner'))
+app.post('/banner', uploadBanner.single('banner_imagem') ,async (req, res) => {
+  console.log(req.file)
+  const pedido = {
+      nome: req.body.nome,
+      description: req.body.description,
+      urlimagem: req.file.filename,
+      url: req.file.path
+  }
+  res.status(201).send({
+      mensagem: 'O pedido foi criado',
+      pedidoCriado: pedido
+      
+  })
+  await pool.query(`UPDATE empresas SET urlbanner1=${pedido.url} where razao='CEARA' `)
+  console.table(pedido)
 
 })
 
