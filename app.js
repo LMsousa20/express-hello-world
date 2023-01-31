@@ -13,11 +13,11 @@ const multer = require('multer')
 // app.use(bodyParser.json());
 
 
-app.get("/", (req, res) => res.type('html').send(rows));
+app.get("/", (req, res) => res.type('html').send({console.log("entrou")}));
 
 app.get('/users', async (req, res) => {
   try {
-      const repUsers = await pool.query(`SELECT * FROM clientes`)
+      const repUsers = await pool.query(`SELECT * FROM empresas`)
       return res.status(200).send(repUsers.rows)
   }
   catch (err) {
@@ -50,6 +50,7 @@ app.get('/products', async (req, res) => {
       return res.status(400).send(err)
   }
 })
+
 
 app.post('/cadprodutos', async (req, res)=>{
 const cad= {
@@ -103,6 +104,22 @@ app.post('/banner', uploadBanner.single('banner_imagem') ,async (req, res) => {
       
   })
   await pool.query(`UPDATE empresas SET urlbanner1=${pedido.url} where razao='CEARA' `)
+})git 
+
+app.get('/funcionario/:idfunc', async (req, res) => {
+  var func = req.params.idfunc;
+  console.log(func)
+  console.log(typeof func)
+
+  try {
+      const retorno = await pool.query(`SELECT * FROM funcionario WHERE id_funcionario='${func}'`)
+      var reposta = res.status(200).send(retorno.rows)
+
+      return reposta
+  }
+  catch (err) {
+      return res.status(400).send(err)
+  }
 })
 
 app.listen(PORT, () => console.log(`Example app listening on PORT ${PORT}!`));
