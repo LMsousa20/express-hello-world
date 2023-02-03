@@ -9,7 +9,7 @@ const pool = new Pool({
 app.use(cors())
 app.use(express.json())
 
-app.get("/", (req, res) => res.type('html').send(rows));
+app.get("/", (req, res) => res.status(200).send({'deu certo'}));
 
 app.get('/users', async (req, res) => {
   try {
